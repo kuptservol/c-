@@ -55,6 +55,20 @@ ostream &operator<<(ostream &os, const set<T> &s) {
     return os << "}";
 }
 
+template<class T>
+ostream &operator<<(ostream &os, const vector<T> &s) {
+    os << "{";
+    bool first = true;
+    for (const auto &x : s) {
+        if (!first) {
+            os << ", ";
+        }
+        first = false;
+        os << x;
+    }
+    return os << "}";
+}
+
 template<class K, class V>
 ostream &operator<<(ostream &os, const map<K, V> &m) {
     os << "{";
@@ -81,10 +95,12 @@ void AssertEqual(const T &t, const U &u, const string &hint) {
 #define RUN_TEST(tr, func) \
     tr.RunTest(func , #func)
 
-#define ASSERT_EQUAL(x, y) { \
-    ostringstream os; \
-    os << __FILE__ << ":" << __LINE__; \
-    AssertEqual (x, y, os.str ()); \
+#define ASSERT_EQUAL(x, y) {                          \
+  ostringstream __assert_equal_private_os;            \
+  __assert_equal_private_os                           \
+    << #x << " != " << #y << ", "                     \
+    << __FILE__ << ":" << __LINE__;                   \
+  AssertEqual(x, y, __assert_equal_private_os.str()); \
 }
 
 template<class TestFunc>
