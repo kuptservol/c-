@@ -103,6 +103,14 @@ void AssertEqual(const T &t, const U &u, const string &hint) {
   AssertEqual(x, y, __assert_equal_private_os.str()); \
 }
 
+#define ASSERT(x) {                          \
+  ostringstream __assert_equal_private_os;            \
+  __assert_equal_private_os                           \
+    << #x << " != " << " False " << ", "                     \
+    << __FILE__ << ":" << __LINE__;                   \
+  AssertEqual(x, false, __assert_equal_private_os.str()); \
+}
+
 template<class TestFunc>
 void TestRunner::RunTest(TestFunc func, const string &test_name) {
     try {
