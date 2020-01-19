@@ -103,12 +103,12 @@ void AssertEqual(const T &t, const U &u, const string &hint) {
   AssertEqual(x, y, __assert_equal_private_os.str()); \
 }
 
-#define ASSERT(x) {                          \
-  ostringstream __assert_equal_private_os;            \
-  __assert_equal_private_os                           \
-    << #x << " != " << " False " << ", "                     \
-    << __FILE__ << ":" << __LINE__;                   \
-  AssertEqual(x, false, __assert_equal_private_os.str()); \
+#define ASSERT(x) {                                      \
+  ostringstream __assert_equal_private_os;               \
+  __assert_equal_private_os                              \
+    << #x << " != " << " True " << ", "                  \
+    << __FILE__ << ":" << __LINE__;                      \
+  AssertEqual(x, true, __assert_equal_private_os.str()); \
 }
 
 template<class TestFunc>
